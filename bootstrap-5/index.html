@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Seller</title>
+
+    <!-- bootstrap 5 -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+
+    <!-- Phần icon của  Font Awesome yêu cầu phải có all.min.css và thư mục webfonts -->
+    <link rel="stylesheet" href="./css/all.min.css"> 
+
+    <!-- css tự cấu hình -->
+    <link rel="stylesheet" href="./css/style.css">
+
+</head>
+
+<body>
+    <header>
+        <button class="toggle-btn" id="toggleSidebar" aria-label="Toggle sidebar" aria-expanded="false">
+            <i class="fas fa-bars"></i> Smart Seller
+        </button>
+    </header>
+
+    <div id="overlay"></div>
+
+    <div class="wrapper" id="wrapper">
+        <nav id="sidebar">
+            <ul class="nav flex-column pt-3">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">
+                        <i class="fas fa-cogs"></i>
+                        <span class="item-text">Hệ Thống</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-box"></i>
+                        <span class="item-text">Sản Phẩm</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-user-tie"></i>
+                        <span class="item-text">Khách Hàng</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="item-text">Đơn Hàng</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-users"></i>
+                        <span class="item-text">Nhân Viên</span>
+                    </a>
+                </li>
+
+                <!-- tiếp tục với các nav khác -->
+            </ul>
+        </nav>
+
+        <div id="content">
+            <main align="center">
+                <!-- bạn chèn nội dung ở đây -->
+                <p style="height: 1000px;">
+                    Phần này có thể cuộn lên xuống ⬆️⬇️
+                </p>
+                <p>
+                    Phần này có thể cuộn lên xuống ⬆️⬇️
+                </p>
+            </main>
+            <footer>© 2025 Smart Seller</footer>
+        </div>
+    </div>
+
+    <script>
+        const toggleButton = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const wrapper = document.getElementById('wrapper');
+        const sidebarExpanded = toggleButton.getAttribute('aria-expanded') === 'true';
+
+        toggleButton.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                sidebar.classList.toggle('show');
+                overlay.classList.toggle('show');
+                toggleButton.setAttribute('aria-expanded', !sidebarExpanded);
+            } else {
+                sidebar.classList.toggle('collapsed');
+                wrapper.classList.toggle('sidebar-collapsed');
+            }
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('show');
+            overlay.classList.remove('show');
+            toggleButton.setAttribute('aria-expanded', 'false');
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('show');
+                overlay.classList.remove('show');
+                sidebar.classList.remove('collapsed');
+                wrapper.classList.remove('sidebar-collapsed');
+                toggleButton.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                sidebar.classList.remove('show');
+                overlay.classList.remove('show');
+                toggleButton.setAttribute('aria-expanded', 'false');
+            }
+        });
+    </script>
+</body>
+
+</html>
