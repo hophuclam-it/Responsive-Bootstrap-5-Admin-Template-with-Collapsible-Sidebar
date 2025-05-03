@@ -1,3 +1,4 @@
+/* khai báo màu ở đây để có thể áp dụng cho toàn bộ trang */
 :root {
   --primary-color: #3c8dbc;
   --sidebar-bg: #222d32;
@@ -8,12 +9,15 @@
   --text-color: #444;
 }
 
+/* Body */
 body {
   margin: 0;
   padding: 0;
   background: var(--main-bg);
+  font-family: sans-serif;
 }
 
+/* Header */
 header {
   height: 60px;
   background-color: var(--primary-color);
@@ -26,32 +30,29 @@ header {
   top: 0;
   z-index: 100;
 }
-
-.toggle-btn {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 20px;
-}
-
+/* 
 .wrapper {
   display: flex;
   height: calc(100vh - 60px);
-}
+  width: 100%;  
+} */
 
+/* Sidebar */
 #sidebar {
   background-color: var(--sidebar-bg);
   color: var(--sidebar-text-color);
-  width: 200px;
+  width: 250px;  /* Chiều rộng sidebar */
   transition: width 0.3s ease;
   height: 100%;
   overflow: hidden;
+  position: relative;
 }
 
 #sidebar.collapsed {
-  width: 70px;
+  width: 70px; /* Khi sidebar thu gọn */
 }
 
+/* Các mục trong sidebar */
 .nav-link {
   display: flex;
   align-items: center;
@@ -67,26 +68,46 @@ header {
 }
 
 .nav-link i {
-  margin-right: 10px;
+  /* margin-right: 10px; */
+  align-items: center;
+  padding: 2px;
 }
 
-#sidebar.collapsed .item-text {
-  display: none;
+/* Các item text trong sidebar */
+#sidebar .item-text {
+  margin-left: 12px;
+  white-space: nowrap; /* Không cho phép chữ bị cắt */
 }
 
-#content {
+
+/* Wrapper */
+.wrapper {
+  display: flex;
+  width: 100%;  /* Đảm bảo wrapper chiếm toàn bộ chiều rộng */
+  height: calc(100vh - 60px);
+
+}
+
+/* Content */
+.content-area {
   flex-grow: 1;
+  width: 100%;  /* Đảm bảo content-area chiếm toàn bộ chiều rộng */
+  /* padding: 20px; */
   display: flex;
   flex-direction: column;
 }
 
+/* Main content */
 main {
-  padding: 20px;
   background: #ecf0f5;
   flex-grow: 1;
   overflow-y: auto;
+  height: 100%;
+  width: 100%;  /* Đảm bảo main chiếm toàn bộ chiều rộng */
+  padding: 20px;
 }
 
+/* Footer */
 footer {
   height: 50px;
   background: var(--footer-bg);
@@ -95,59 +116,67 @@ footer {
   justify-content: center;
   align-items: center;
   color: var(--text-color);
+  margin-top: auto;
+  width: 100%;  /* Đảm bảo footer chiếm toàn bộ chiều rộng */
 }
 
+
+/* Sidebar ở chế độ mobile */
 @media (max-width: 768px) {
   #sidebar {
-    position: fixed;
-    top: 60px;
-    left: -200px;
-    width: 200px;
-    height: calc(100% - 60px);
-    z-index: 1050;
-    transition: left 0.3s ease;
+      position: fixed;
+      top: 60px;
+      left: -200px;  /* Để sidebar ẩn bên trái */
+      width: 200px;
+      height: calc(100% - 60px);
+      z-index: 1050;
+      transition: left 0.3s ease;
   }
 
   #sidebar.show {
-    left: 0;
+      left: 0;  /* Hiển thị sidebar khi kích hoạt */
   }
 
-  #content {
-    margin-left: 0 !important;
+  /* Đảm bảo phần nội dung chiếm toàn bộ không gian khi sidebar ẩn */
+  #content-area {
+      margin-left: 0 !important;
   }
 
   #overlay {
-    position: fixed;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    height: calc(100% - 60px);
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1040;
-    display: none;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 60px);
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1040;
+      display: none;
   }
 
   #overlay.show {
-    display: block;
+      display: block;
   }
 }
 
 @media (min-width: 769px) {
+  /* Mở rộng sidebar khi có đủ không gian trên desktop */
   #sidebar.collapsed .nav-link {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 10px 0;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 10px 0;
   }
 
   #sidebar.collapsed .nav-link i {
-    font-size: 18px;
+      font-size: 18px;
+      align-items: center;
   }
 
   #sidebar.collapsed .item-text {
-    display: block;
-    font-size: 10px;
-    margin-top: 4px;
+      display: block;
+      font-size: 10px;
+      margin-top: 4px;
+      margin-left: 0;
   }
 }

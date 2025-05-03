@@ -1,86 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import Footer from './components/Footer';
+import useSidebar from './hooks/useSidebar';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';  // Bootstrap CSS
-import 'font-awesome/css/font-awesome.min.css';  // Font Awesome
 
 function App() {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [sidebarVisible, setSidebarVisible] = useState(false);
-
-  const toggleSidebar = () => {
-    if (window.innerWidth <= 768) {
-      setSidebarVisible(!sidebarVisible);
-    } else {
-      setSidebarCollapsed(!sidebarCollapsed);
-    }
-  };
-
-  const closeSidebar = () => {
-    setSidebarVisible(false);
-  };
+  const { isSidebarOpen, isCollapsed, handleToggleSidebar, setIsSidebarOpen } = useSidebar();
 
   return (
-    <div className="App">
-      <header className="header">
-        <button
-          className="toggle-btn"
-          id="toggleSidebar"
-          aria-label="Toggle sidebar"
-          aria-expanded={sidebarVisible ? 'true' : 'false'}
-          onClick={toggleSidebar}
-        >
-          <i className="fa fa-bars"></i> Smart Seller
-        </button>
-      </header>
+    <div>
+      <Header
+        onToggle={handleToggleSidebar}
+        isSidebarOpen={isSidebarOpen}
+        isCollapsed={isCollapsed}
+      />
 
-      {/* Overlay for mobile */}
-      {sidebarVisible && <div id="overlay" onClick={closeSidebar}></div>}
+      {/* Overlay cho mobile */}
+      <div
+        id="overlay"
+        className={`overlay ${isSidebarOpen ? 'show' : ''}`}
+        onClick={() => setIsSidebarOpen(false)}
+      />
 
-      <div className="wrapper">
-        <nav
-          id="sidebar"
-          className={sidebarCollapsed ? 'collapsed' : ''}>
-          <ul className="nav flex-column pt-3">
-            <li className="nav-item">
-              <a className="nav-link active" href="#">
-                <i className="fa fa-cogs"></i>
-                <span className="item-text">Hệ Thống</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                <i className="fa fa-box"></i>
-                <span className="item-text">Sản Phẩm</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                <i className="fa fa-user-tie"></i>
-                <span className="item-text">Khách Hàng</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                <i className="fa fa-shopping-cart"></i>
-                <span className="item-text">Đơn Hàng</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                <i className="fa fa-users"></i>
-                <span className="item-text">Nhân Viên</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+      {/* Wrapper thay đổi theo trạng thái collapsed */}
+      <div className={`wrapper ${isCollapsed ? 'sidebar-collapsed' : ''}`}>
+        <Sidebar isSidebarOpen={isSidebarOpen} isCollapsed={isCollapsed} />
+        <div className="content-area">
+          <main>
+            <h1>Welcome to Smart Seller</h1>
+            <p style={{ height: '1000px' }}>This is your main content area.</p>
 
-        <div id="content">
-          <main align="center">
-            {/* Nội dung trang */}
-            <p style={{ height: '1000px' }}>Phần này có thể cuộn lên xuống ⬆️⬇️</p>
-            <p>Phần này có thể cuộn lên xuống ⬆️⬇️</p>
+
           </main>
-          <footer>© 2025 Smart Seller</footer>
+          <Footer />
         </div>
       </div>
     </div>
